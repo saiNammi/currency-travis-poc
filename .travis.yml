@@ -1,0 +1,47 @@
+os: linux
+dist: focal
+arch: ppc64le
+
+services:
+    - docker
+
+before_install:
+    - sudo apt update; sudo apt install -y jq; jq --version
+    # Currently pointing to test branch code of build-script repo
+    - git clone https://github.com/nikhil-kalbande/build-scripts.git
+    - cd build-scripts; git checkout jen-travis-mig
+
+env:
+  global:
+    - PACKAGE_NAME="dex"
+    - VERSION="v2.35.3"
+    - LANGUAGE="Nodejs"
+
+jobs:
+  include:
+    - stage: Builds
+      name: Build script run
+      #before_install: docker pull registry.access.redhat.com/ubi8/ubi:8.7
+      script: 
+        - chmod +x ../read_buildinfo.sh;bash ./../read_buildinfo.sh
+        - source variable.sh
+        - if [ ${VALIDATE_BUILD_SCRIPT} == true ]; then chmod +x ./../build_package.sh; bash -x ./../build_package.sh; fi    
+
+    - #stage: Build docker image
+      name: Docker build
+      script: 
+        - chmod +x ../read_buildinfo.sh;bash ./../read_buildinfo.sh
+        - source variable.sh
+        - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x ./../build_docker.sh; bash -x ./../build_docker.sh; fi
+
+    - stage: Run Scanner
+      name: Run trivy scan
+      script:
+        - echo "This is trivy scan"
+    - name: Run syft scan
+      script:
+        - echo "This is syft scan"
+    - name: Run clair scan
+      script: 
+        - echo "This is clair scan"
