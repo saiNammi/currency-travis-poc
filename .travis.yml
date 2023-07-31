@@ -6,6 +6,9 @@ language: java
 services:
     - docker
 
+before_install:
+    - sudo apt install -y jq; jq --version
+
 env:
   global:
     - PACKAGE_NAME="dex"
@@ -18,7 +21,6 @@ jobs:
       name: Build script run
       #before_install: docker pull registry.access.redhat.com/ubi8/ubi:8.7
       before_install:
-        - sudo apt install -y jq; jq --version
         # Currently pointing to test branch code of build-script repo
         - git clone https://github.com/nikhil-kalbande/build-scripts.git
         - cd build-scripts; git checkout jen-travis-mig      
