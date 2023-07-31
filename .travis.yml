@@ -14,7 +14,7 @@ env:
 
 jobs:
   include:
-    - stage: Builds
+    - stage: Build
       name: Build script run
       #before_install: docker pull registry.access.redhat.com/ubi8/ubi:8.7
       before_install:
@@ -32,7 +32,7 @@ jobs:
           paths:
             - .
 
-    - #stage: Build docker image
+    - stage: Build docker image
       name: Docker build
       workspaces:
         use: build_cache
