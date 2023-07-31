@@ -40,6 +40,7 @@ jobs:
         - ls -ltr
         - cd build-scripts
         - ls -ltr
+        - chmod +x ../read_buildinfo.sh;bash ./../read_buildinfo.sh
         - source variable.sh
         - echo "BUILD_DOCKER - $BUILD_DOCKER"
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x ./../build_docker.sh; bash -x ./../build_docker.sh; fi
