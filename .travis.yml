@@ -1,5 +1,5 @@
 os: linux
-dist: bionic
+dist: focal
 arch: ppc64le
 language: java
 
@@ -38,6 +38,9 @@ jobs:
         use: build_cache
       script: 
         - ls -ltr
+        - cd build-scripts
+        - ls -ltr
+        - source variable.sh
         - echo "BUILD_DOCKER - $BUILD_DOCKER"
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x ./../build_docker.sh; bash -x ./../build_docker.sh; fi
 
