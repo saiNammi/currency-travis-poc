@@ -27,5 +27,6 @@ if [ $buildDocker == true ];then
 	#curl -s -k -u ${env.dockerHubUser}:${env.dockerHubPassword} --upload-file sbom_results.cyclonedx ${url_prefix}/Trivy_sbom_results.json
 	grep -B2 "Total: " vulnerabilities_results.txt > vulnerabilities_summary.txt
 	#curl -s -k -u ${env.dockerHubUser}:${env.dockerHubPassword} --upload-file vulnerabilities_summary.txt ${url_prefix}/Trivy_vulnerability_summary.txt
+ fi
 
 
