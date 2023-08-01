@@ -58,7 +58,7 @@ jobs:
         - echo "BUILD_DOCKER - $BUILD_DOCKER"
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x ./../build_docker.sh; bash -x ./../build_docker.sh; fi      
         - echo "This is trivy scan"
-        - if [ ${BUILD_DOCKER} == true ]; then chmod +x ../trivy_scan.sh; bash -x ../trivy_scan.sh, fi
+        - chmod +x ./../trivy_scan.sh; bash -x ./../trivy_scan.sh, fi
         
     - name: Run syft scan
       script:
