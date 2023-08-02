@@ -57,13 +57,27 @@ jobs:
         - source variable.sh
         - echo "BUILD_DOCKER - $BUILD_DOCKER"
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x ./../build_docker.sh; bash -x ./../build_docker.sh; fi      
-        - echo "This is trivy scan"
         - chmod +x ../trivy_scan.sh;bash ./../trivy_scan.sh
-        - ls -ltr
         
     - name: Run syft scan
+      workspaces:
+        use: build_cache
       script:
-        - echo "This is syft scan"
-    - name: Run clair scan
-      script: 
-        - echo "This is clair scan"
+        - cd build-scripts
+        - chmod +x ../read_buildinfo.sh;bash ./../read_buildinfo.sh
+        - source variable.sh
+        - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x ./../build_docker.sh; bash -x ./../build_docker.sh; fi
+        - chmod +x ../syft_scan.sh;bash ./../syft_scan.sh
+
+    - name: Run grype scan
+      workspaces:
+        use: build_cache
+      script:
+        - cd build-scripts
+        - chmod +x ../read_buildinfo.sh;bash ./../read_buildinfo.sh
+        - source variable.sh
+        - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x ./../build_docker.sh; bash -x ./../build_docker.sh; fi
+        - chmod +x ../grype_scan.sh;bash ./../grype_scan.sh
+ 
