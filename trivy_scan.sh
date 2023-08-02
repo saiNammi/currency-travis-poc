@@ -10,9 +10,6 @@ imageName=$IMAGE_NAME
 buildDocker=true
 
 cd $packageDirPath
-echo "Checking for docker_build value in build_info.json"
-buildDocker=$(jq .docker_build $configFile)
-
 
 if [ $buildDocker == true ];then
 	wget https://github.com/aquasecurity/trivy/releases/download/v0.40.0/trivy_0.40.0_Linux-PPC64LE.tar.gz
