@@ -16,16 +16,22 @@ buildDocker=$(jq .docker_build $configFile)
 
 if [ $buildDocker == true ];then
 	wget https://github.com/aquasecurity/trivy/releases/download/v0.40.0/trivy_0.40.0_Linux-PPC64LE.tar.gz
+ 	ls -ltr
 	tar -xf trivy_0.40.0_Linux-PPC64LE.tar.gz
         chmod +x trivy
         sudo mv trivy /usr/bin
 	sudo trivy -q image --timeout 10m -f json ${imageName} > vulnerabilities_results.json
+ 	cat vulnerabilities_results.json
 	#curl -s -k -u ${env.dockerHubUser}:${env.dockerHubPassword} --upload-file vulnerabilities_results.json ${url_prefix}/Trivy_vulnerabilities_results.json
 	sudo trivy -q image --timeout 10m ${imageName} > vulnerabilities_results.txt
+ 	cat vulnerabilities_results.txt
 	#curl -s -k -u ${env.dockerHubUser}:${env.dockerHubPassword} --upload-file vulnerabilities_results.txt ${url_prefix}/Trivy_vulnerabilities_results.txt
 	sudo trivy -q image --timeout 10m -f cyclonedx ${imageName} > sbom_results.cyclonedx
+ 	cat sbom_results.cyclonedx
 	#curl -s -k -u ${env.dockerHubUser}:${env.dockerHubPassword} --upload-file sbom_results.cyclonedx ${url_prefix}/Trivy_sbom_results.json
 	grep -B2 "Total: " vulnerabilities_results.txt > vulnerabilities_summary.txt
+ 	cat vulnerabilities_summary.txt
+  	ls -ltr | grep "vulner"
 	#curl -s -k -u ${env.dockerHubUser}:${env.dockerHubPassword} --upload-file vulnerabilities_summary.txt ${url_prefix}/Trivy_vulnerability_summary.txt
  fi
 
