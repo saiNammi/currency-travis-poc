@@ -44,7 +44,9 @@ jobs:
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x ./../build_docker.sh; bash -x ./../build_docker.sh; fi
         - echo "printing docker images"
         - docker images
-        - docker save -o /home/travis/build/saiNammi/currency-travis-poc/build-scripts/image.tar icr.io/ppc64le-oss/dex-ppc64le:v2.35.3
+        - pwd
+        - echo $HOME
+        - docker save -o "/home/travis/build/saiNammi/currency-travis-poc/build-scripts/image.tar" icr.io/ppc64le-oss/dex-ppc64le:v2.35.3
         - ls -ltr
       workspaces:
         create:
