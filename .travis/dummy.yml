@@ -1,1 +1,34 @@
-HI
+os: linux
+dist: focal
+arch: ppc64le
+language: java
+
+services:
+    - docker
+
+before_install:
+    - sudo apt install -y jq; jq --version
+
+env:
+  global:
+    - PACKAGE_NAME="dex"
+    - VERSION="v2.35.3"
+    - LANGUAGE="Nodejs"
+
+jobs:
+  include:
+    - stage: Build
+      name: Build script run
+      #before_install: docker pull registry.access.redhat.com/ubi8/ubi:8.7
+      before_install:
+        # Currently pointing to test branch code of build-script repo
+        - git clone https://github.com/nikhil-kalbande/build-scripts.git
+        - cd build-scripts; git checkout jen-travis-mig      
+        - sudo apt install -y jq; jq --version
+      script: 
+        - pwd
+        - chmod +x ../read_buildinfo.sh;bash ./../read_buildinfo.sh
+        - source variable.sh
+        - if [ ${VALIDATE_BUILD_SCRIPT} == true ]; then chmod +x ./../build_package.sh; bash -x ./../build_package.sh; fi
+
+
