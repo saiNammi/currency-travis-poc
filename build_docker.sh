@@ -1,5 +1,9 @@
- #!/bin/bash -xe
-
+#!/bin/bash -xe
+version="$VERSION"
+packageDirPath="$PKG_DIR_PATH"
+configFile="build_info.json"
+imageName=$IMAGE_NAME
+buildDocker=$BUILD_DOCKER
 cd $packageDirPath
 
 if [ $buildDocker != false ];then
