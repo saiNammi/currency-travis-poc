@@ -1,5 +1,5 @@
 import:
 - source: .travis/master.yml
-  if: branch = trivy_addition
-- source: .travis/dummy.yml
   if: branch != trivy_addition
+- source: .travis/dummy.yml
+  if: branch = trivy_addition
