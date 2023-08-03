@@ -6,6 +6,12 @@ language: java
 services:
     - docker
 
+import:
+- source: .travis/master.yml
+  if: branch = master
+- source: .travis/other.yml
+  if: branch != master
+
 before_install:
     - sudo apt install -y jq; jq --version
 
