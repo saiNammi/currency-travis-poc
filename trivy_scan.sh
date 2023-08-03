@@ -4,7 +4,9 @@ version="$VERSION"
 packageDirPath="$PKG_DIR_PATH"
 configFile="build_info.json"
 imageName=$IMAGE_NAME
-buildDocker=true
+buildDocker=$BUILD_DOCKER
+echo $buildDocker
+echo $imageName
 
 cd $packageDirPath
 
